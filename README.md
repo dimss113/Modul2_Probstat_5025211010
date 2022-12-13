@@ -206,6 +206,5 @@ output:
 
 > kesimpulan: statistik uji-z menurut informasi yang kami miliki dari pernyataan tersebut. kami menggunakan statistik-z karena kami mengetahui rata-rata μ dan standar deviasi σ, juga kami mengetahui bahwa ukuran sampel ≥30. Kemudian, kami menghitung nilai kritis kiri. Sekarang, kita dapat menyimpulkan bahwa uji statistik 8.974359 lebih dari nilai kritis -1.959964. Konsekuensinya, pada tingkat signifikansi 0,05, kita menerima klaim yang berarti sebuah mobil berjarak di atas 20.000 km/tahun.
 
-> 
-Nilai P mendekati 1 menunjukkan tidak ada perbedaan antara kelompok selain karena kebetulan.
+> Nilai P mendekati 1 menunjukkan tidak ada perbedaan antara kelompok selain karena kebetulan.
 
