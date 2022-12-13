@@ -369,3 +369,86 @@ ggboxplot(my_data, x = "Group", y="Length",
 
 ![4a4](documentation/4a4.png)
 
+> Kesimpulan 4a: Tidak ada outlier ekstrim
+
+
+### b) carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
+
+```r
+leveneTest(Length ~ Group, data = my_data)
+```
+
+output:
+
+```r
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value Pr(>F)
+group   2  0.1702 0.8438
+      102       
+```
+
+> Dari output di atas terlihat bahwa p-value tidak kurang dari taraf signifikansi 0,05. Ini berarti bahwa tidak ada bukti yang menunjukkan bahwa varian antar kelompok berbeda secara signifikan secara statistik. Oleh karena itu, dapat diasumsikan tidak ada homogenitas varian pada kelompok perlakuan yang berbeda.
+
+
+### c) Untuk uji ANOVA, buatlah model linier dengan Panjang versus Grup dan beri nama model tersebut model 1.
+
+```r
+model <- lm(Length ~ Group, data = my_data)
+ggqqplot(residuals(model))
+```
+
+output:
+
+![4c](documentation/4c.png)
+
+
+### d) Dari Hasil Poin C , Berapakah nilai-p ? ,  Apa yang dapat Anda simpulkan dari H0?
+
+```r
+shapiro.test(residuals(model))
+```
+
+output:
+
+```r
+	Shapiro-Wilk normality test
+
+data:  residuals(model)
+W = 0.98017, p-value = 0.1176
+```
+
+> Kesimpulan di atas didukung oleh uji Shapiro-Wilk pada residu ANOVA (W = 0,98017, p = 0,1176) yang tidak menemukan indikasi bahwa normalitas dilanggar
+
+
+### e) Verifikasilah jawaban model 1 dengan Post-hooc test TukeyHSD ,  dari nilai p yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan.
+
+```r
+submodel <- aov(Length ~ Group, data = my_data)
+summary(submodel)
+```
+
+output:
+
+```r
+             Df Sum Sq Mean Sq F value Pr(>F)   
+Group         2  10.61   5.307   7.098 0.0013 **
+Residuals   102  76.27   0.748                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+> Nilai p yang diamati dari tabel ANOVA kurang dari 0,05, menunjukkan bahwa ada cukup bukti untuk menyimpulkan bahwa rerata kelompok tidak sama
+
+### f) Visualisasikan data dengan ggplot2
+
+```r
+ggplot(my_data, aes(Group, Length, colour=Group)) + geom_point()
+```
+
+output:
+
+![4e](documentation/4e.png)
+
+
+
+
