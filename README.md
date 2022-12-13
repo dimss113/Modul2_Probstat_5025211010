@@ -156,5 +156,56 @@ mean of x mean of y
 
 > dapat disimpulkan bahwa p value kurang dari signifikan value sehingga H0 ditolak
 
+## Soal Nomor 2
+> Diketahui bahwa mobil dikemudikan rata-rata lebih dari 20.000 kilometer per tahun. Untuk menguji klaim ini, 100 pemilik mobil yang dipilih secara acak diminta untuk mencatat jarak yang mereka tempuh. Jika sampel acak menunjukkan rata-rata 23.500 kilometer dan standar deviasi 3900 kilometer. (Kerjakan menggunakan library seperti referensi pada modul). 
 
+### a) Apakah Anda setuju dengan klaim tersebut?
+
+```
+Setuju
+```
+
+### b) Jelaskan maksud dari output yang dihasilkan! 
+> diketahui bahwa xbar = 23500, rata-rata populasi = 20000, sd = 3900 dan n = 100
+- untuk null hipotesisnya adalah
+
+```
+H0: μ <= 20000
+```
+
+- untuk alternatif hipotesisnya adalah]
+
+```
+H1:  μ > 20000
+```
+
+### c)  Buatlah kesimpulan berdasarkan P-Value yang dihasilkan!
+- menentukan p-value dan z-score
+
+```r
+## menentukan p-value dan juga z-score
+xbar = 23500
+miu0 = 20000
+sd = 3900
+n = 100
+z <- (xbar-miu0)/(sd/sqrt(n));
+p_value = pnorm(z)
+print(paste("p-value: ", as.character(p_value)))
+
+significant_val = .05
+z.alpha = qnorm(significant_val)
+print(paste("z-score: ", as.character(-z.alpha)))
+```
+
+output:
+
+```r
+"p-value:  1"
+"z-score:  1.64485362695147"
+```
+
+> kesimpulan: statistik uji-z menurut informasi yang kami miliki dari pernyataan tersebut. kami menggunakan statistik-z karena kami mengetahui rata-rata μ dan standar deviasi σ, juga kami mengetahui bahwa ukuran sampel ≥30. Kemudian, kami menghitung nilai kritis kiri. Sekarang, kita dapat menyimpulkan bahwa uji statistik 8.974359 lebih dari nilai kritis -1.959964. Konsekuensinya, pada tingkat signifikansi 0,05, kita menerima klaim yang berarti sebuah mobil berjarak di atas 20.000 km/tahun.
+
+> 
+Nilai P mendekati 1 menunjukkan tidak ada perbedaan antara kelompok selain karena kebetulan.
 
