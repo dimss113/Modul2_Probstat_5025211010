@@ -11,6 +11,15 @@
 - library dplyr
 - library ggplot
 - library BSDA 
+- library(MASS)
+- library("magrittr")
+- library(tidyverse)
+- library("ggpubr")
+- library(car)
+- library(multcompView)
+- library(readr)
+- library(ggplot2)
+
 
 > pada praktikum ini akan menggunakan fungsi-fungsi yang tersedia pada library Rlab, dplyr, dan ggplot. Untuk itu perlu melakukan instalasi dengan mengetikkan code berikut pada console di RStudio
 ```r
@@ -18,6 +27,10 @@ install.packages("Rlab")
 install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("BSDA")
+install.packages("multicompView")
+install.packages("tidyverse")
+install.packages("ggpubr")
+install.packages("magrittr")
 ```
 
 ## Soal Nomor 1
