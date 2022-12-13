@@ -300,3 +300,72 @@ output:
 
 ### f) Kesimpulan
 > kami menghitung statistik uji-z sesuai dengan informasi yang kami miliki dari Contoh 2. Dalam hal ini, kami menggunakan statistik-z karena kami mengetahui rata-rata μ dan standar deviasi σ uji-z = 2,298274 Kemudian kami menghitung pval untuk menghitung dua ekor p-nilai df statistik Alih-alih menggunakan nilai kritis asumsikan df=2 Karena ternyata lebih besar dari tingkat signifikansi 0,05, kami tidak menolak hipotesis nol Statistik uji 1,851676 terletak di antara nilai kritis -4,302653 dan 4.302653. Oleh karena itu, pada tingkat signifikansi 0,05, kami tidak menolak hipotesis nol bahwa rata-rata Bandung dan Bali tidak berbeda.
+
+
+## Soal Nomor 4
+> Seorang Peneliti sedang meneliti spesies dari kucing di ITS . Dalam penelitiannya ia mengumpulkan data  tiga spesies kucing yaitu kucing oren, kucing hitam dan kucing putih dengan panjangnya masing-masing.  Jika : diketahui dataset https://intip.in/datasetprobstat1 . H0 : Tidak ada perbedaan panjang antara ketiga spesies atau rata-rata panjangnya sama
+
+### a) Buatlah masing masing jenis spesies menjadi  3 subjek "Grup" (grup 1,grup 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan lihat apakah ada outlier utama dalam homogenitas varians.
+
+```r
+Grup1 <- c(19 ,18.6 ,18.3 ,18 ,18.2 ,18.6 ,18.5 ,18.2 ,18.4 ,18.9 ,19.9 ,18.5 ,16.9 ,18 ,17.3 ,17.8 ,20 ,19 ,19.2 ,18.9 ,17.5 ,18.1 ,18 ,18.1 ,17.4 ,17.9 ,17.4 ,16.7 ,19.7 ,19.3 ,19 ,19.4 ,19.8 ,19.3 ,18.5)
+Grup2 <- c(18.3 ,17.9 ,17.6 ,17.3 ,17.5 ,17.9 ,17.8 ,17 ,17.7 ,18.2 ,19.2 ,17.8 ,16.2 ,17.3 ,16.6 ,17.1 ,19.3 ,18.3 ,18.5 ,18 ,16.8 ,17.2 ,17.3 ,17.4 ,16.7 ,17.2 ,16.7 ,16.2 ,19 ,18.6 ,18.3 ,18.7 ,19.1 ,18.6 ,17.8)
+Grup3 <- c(18, 18.6, 18.3, 18, 18.2, 18.2, 18.5, 18.2, 19.2, 18.5, 19.9, 18.5, 16.9, 18, 17, 17.2, 20, 19, 19.2, 18.9, 17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.5, 19.7, 19, 19, 19.7, 19.8, 19.3, 17)
+```
+
+- melakukan plotting untuk Group 1
+
+```r
+qqnorm(Grup1, 
+       ylab = "Cat Width (in cm)", 
+       col = "dark green")
+qqline(Grup1, 
+       col = "red")
+```
+
+![4a1](documentation/4a1.png)
+
+- melakukan plotting untuk Group 2
+
+```r
+qqnorm(Grup2, 
+       ylab = "Cat Width (in cm)", 
+       col = "dark blue")
+qqline(Grup2, 
+       col = "green")
+```
+
+![4a2](documentation/4a2.png)
+
+- melakukan plotting untuk Group 3
+
+```r
+qqnorm(Grup3, 
+       ylab = "Cat Width (in cm)", 
+       col = "dark orange")
+qqline(Grup3, 
+       col = "blue")
+```
+
+![4a3](documentation/4a3.png)
+
+- Plotting ketiga Group untuk persebaran panjang dari masing-masing jenis kucing
+
+```r
+my_data <- read.delim(file.choose())
+my_data$Group <- ordered(my_data$Group, levels = c("1", "2", "3"))
+levels(my_data$Group)
+group_by(my_data, Group) %>%
+  summarise(
+    count = n(),
+    mean = mean(Length, na.rm = TRUE),
+    sd = sd(Length, na.rm = TRUE)
+  )
+ggboxplot(my_data, x = "Group", y="Length",
+          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          order = c("1", "2", "3"),
+          ylab = "Length", xlab = "Kucing")
+```
+
+![4a4](documentation/4a4.png)
+
