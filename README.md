@@ -10,11 +10,14 @@
 - library Rlab
 - library dplyr
 - library ggplot
+- library BSDA 
+
 > pada praktikum ini akan menggunakan fungsi-fungsi yang tersedia pada library Rlab, dplyr, dan ggplot. Untuk itu perlu melakukan instalasi dengan mengetikkan code berikut pada console di RStudio
 ```r
 install.packages("Rlab")
 install.packages("dplyr")
 install.packages("ggplot2")
+install.packages("BSDA")
 ```
 
 ## Soal Nomor 1
@@ -208,3 +211,8 @@ output:
 
 > Nilai P mendekati 1 menunjukkan tidak ada perbedaan antara kelompok selain karena kebetulan.
 
+
+## Soal Nomor 3
+> Diketahui perusahaan memiliki seorang data analyst ingin memecahkan permasalahan pengambilan keputusan dalam perusahaan tersebut. Selanjutnya didapatkanlah data berikut dari perusahaan saham tersebut.
+
+![3](documentation/3.png)
