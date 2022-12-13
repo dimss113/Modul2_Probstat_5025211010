@@ -1,6 +1,7 @@
 library("Rlab")
 library(ggplot2)
 library(dplyr)
+library("BSDA")
 
 # soal nomor 1a (menentukan standar deviasi dari data selisih pasangan pengamatan tabel)
 ## diketahui n = 9, 
@@ -56,5 +57,41 @@ var.test(x, y)
 
 ## menentukan apakah ho diterima atau ditolak, 
 t.test(x, y, var.equal = TRUE)
+
+# Soal nomor 2
+## Apakah Anda setuju dengan klaim tersebut? (setuju)
+## b) Jelaskan maksud dari output yang dihasilkan!
+## diketahui bahwa n = 100, xbar = 23500, sd = 3900
+# H0 = 20000
+# H1 /= 20000
+
+tsum.test(mean.x = 23500, 3900, n.x = 100, var.equal = TRUE)
+
+## menentukan p-value dan juga z-score
+xbar = 23500
+miu0 = 20000
+sd = 3900
+n = 100
+z <- (xbar-miu0)/(sd/sqrt(n));
+p_value = pnorm(z)
+print(paste("p-value: ", as.character(p_value)))
+
+## menentukan z-score
+significant_val = .05
+z.alpha = qnorm(significant_val)
+-z.alpha
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
