@@ -117,6 +117,44 @@ sample estimates:
 mean of x mean of y 
  74.22222  90.44444 
 ```
+### c) tentukanlah apakah terdapat pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan aktivitas 𝐴 jika diketahui tingkat signifikansi 𝛼 = 5% serta H0 : “tidak ada pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan aktivitas 𝐴”
+
+- dalam menentukan apakah H0 dan H1 diterima kita bisa menentukann p value. apabila p value < signifikan value maka tolak H0 dan sebaliknya terima H1.
+
+```r
+## perbandingan x dan y
+var.test(x, y)
+
+## menentukan apakah ho diterima atau ditolak, 
+t.test(x, y, var.equal = TRUE)
+```
+
+output:
+```r
+	F test to compare two variances
+
+data:  x and y
+F = 0.19153, num df = 8, denom df = 8, p-value = 0.03101
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.04320235 0.84909000
+sample estimates:
+ratio of variances 
+         0.1915272 
+
+	Two Sample t-test
+
+data:  x and y
+t = -5.0473, df = 16, p-value = 0.000119
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -23.035747  -9.408698
+sample estimates:
+mean of x mean of y 
+ 74.22222  90.44444 
+```
+
+> dapat disimpulkan bahwa p value kurang dari signifikan value sehingga H0 ditolak
 
 
 
