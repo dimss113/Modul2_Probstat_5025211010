@@ -39,4 +39,22 @@ sdeviation <- sd.y-sd.x
 sdeviation
 
 
+# soal nomor 1b carilah nilai t (p-value)
+## dalam menentukan t(p-value) kita bisa menggunakan function yang disediakan yaitu t.test
+x = c(78, 75, 67, 77, 70, 72, 78, 74, 77)
+y = c(100, 95, 70, 90, 90, 90, 89, 90, 100)
+t.test(x, y, alternative = "greater", var.equal =  FALSE)
+
+
+# soal nomor 1c apakah terdapat pengaruh yang signifikan secara statistik
+## diketahui siginifikan value = 0,05, 
+## H0 = tidak ada pengaruh signifikan dalam hal kadar saturasi oksigen
+## H1 = ada pengaruh signifikan
+
+## perbandingan x dan y
+var.test(x, y)
+
+## menentukan apakah ho diterima atau ditolak, 
+t.test(x, y, var.equal = TRUE)
+
 
