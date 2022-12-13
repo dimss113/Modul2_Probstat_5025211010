@@ -3,6 +3,10 @@ library(ggplot2)
 library(dplyr)
 library("BSDA")
 library(MASS)
+library("magrittr")
+library(tidyverse)
+library("ggpubr")
+library(car)
 
 # soal nomor 1a (menentukan standar deviasi dari data selisih pasangan pengamatan tabel)
 ## diketahui n = 9, 
@@ -129,7 +133,8 @@ print(paste("critical value: ", as.character(critical_val)))
 
 
 
-# Soal Nomor 4
+# Soal Nomor 
+## a) 
 Grup1 <- c(19 ,18.6 ,18.3 ,18 ,18.2 ,18.6 ,18.5 ,18.2 ,18.4 ,18.9 ,19.9 ,18.5 ,16.9 ,18 ,17.3 ,17.8 ,20 ,19 ,19.2 ,18.9 ,17.5 ,18.1 ,18 ,18.1 ,17.4 ,17.9 ,17.4 ,16.7 ,19.7 ,19.3 ,19 ,19.4 ,19.8 ,19.3 ,18.5)
 Grup2 <- c(18.3 ,17.9 ,17.6 ,17.3 ,17.5 ,17.9 ,17.8 ,17 ,17.7 ,18.2 ,19.2 ,17.8 ,16.2 ,17.3 ,16.6 ,17.1 ,19.3 ,18.3 ,18.5 ,18 ,16.8 ,17.2 ,17.3 ,17.4 ,16.7 ,17.2 ,16.7 ,16.2 ,19 ,18.6 ,18.3 ,18.7 ,19.1 ,18.6 ,17.8)
 Grup3 <- c(18, 18.6, 18.3, 18, 18.2, 18.2, 18.5, 18.2, 19.2, 18.5, 19.9, 18.5, 16.9, 18, 17, 17.2, 20, 19, 19.2, 18.9, 17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.5, 19.7, 19, 19, 19.7, 19.8, 19.3, 17)
@@ -152,7 +157,37 @@ qqnorm(Grup3,
 qqline(Grup3, 
        col = "blue")
 
+my_data <- read.delim(file.choose())
+my_data$Group <- ordered(my_data$Group, levels = c("1", "2", "3"))
+levels(my_data$Group)
+group_by(my_data, Group) %>%
+  summarise(
+    count = n(),
+    mean = mean(Length, na.rm = TRUE),
+    sd = sd(Length, na.rm = TRUE)
+  )
+ggboxplot(my_data, x = "Group", y="Length",
+          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          order = c("1", "2", "3"),
+          ylab = "Length", xlab = "Kucing")
+
+## b) 
+
+leveneTest(Length ~ Group, data = my_data)
+### Dari output di atas terlihat bahwa p-value tidak kurang dari taraf signifikansi 0,05. Ini berarti bahwa tidak ada bukti yang menunjukkan bahwa varian antar kelompok berbeda secara signifikan secara statistik. Oleh karena itu, dapat diasumsikan tidak ada homogenitas varian pada kelompok perlakuan yang berbeda.
+
+## c)
+model <- lm(Length ~ Group, data = my_data)
+ggqqplot(residuals(model))
+
+## d)
+shapiro.test(residuals(model))
+####Kesimpulan di atas didukung oleh uji Shapiro-Wilk pada residu ANOVA (W = 0,98017, p = 0,1176) yang tidak menemukan indikasi bahwa normalitas dilanggar
 
 
+## e)
+submodel <- aov(Length ~ Group, data = my_data)
+summary(submodel)
 
-
+ggplot(my_data, aes(Group, Length, colour=Group)) + geom_point()
+### Nilai p yang diamati dari tabel ANOVA kurang dari 0,05, menunjukkan bahwa ada cukup bukti untuk menyimpulkan bahwa rerata kelompok tidak sama
