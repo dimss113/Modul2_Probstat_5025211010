@@ -7,6 +7,10 @@ library("magrittr")
 library(tidyverse)
 library("ggpubr")
 library(car)
+library(multcompView)
+library(readr)
+library(ggplot2)
+
 
 # soal nomor 1a (menentukan standar deviasi dari data selisih pasangan pengamatan tabel)
 ## diketahui n = 9, 
@@ -191,3 +195,37 @@ summary(submodel)
 
 ggplot(my_data, aes(Group, Length, colour=Group)) + geom_point()
 ### Nilai p yang diamati dari tabel ANOVA kurang dari 0,05, menunjukkan bahwa ada cukup bukti untuk menyimpulkan bahwa rerata kelompok tidak sama
+
+
+# Soal Nomor 5
+
+## a) Buatlah plot sederhana untuk visualisasi data 
+GTL <- read_csv("GTL.csv")
+head(GTL)
+str(GTL)
+
+### Visualisasi Sederhana dengan plotting
+qplot(x = Temp, y = Light, geom = "point", data = GTL) +
+  facet_grid(.~Glass, labeller = label_both)
+
+## b) Lakukan uji ANOVA dua arah untuk 2 faktor
+anova <- aov(Light ~ Glass + Temp, data = GTL)
+summary(anova)
+
+## c) Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
+
+data_summary <- group_by(GTL, Glass, Temp) %>%
+  summarise(mean=mean(Light), sd=sd(Light)) %>%
+  arrange(desc(mean))
+print(data_summary)
+
+## d) Lakukan uji Tukey
+tukey <- TukeyHSD(anova, ordered = FALSE)
+print(tukey)
+
+## e) Gunakan compact letter display untuk menunjukkan perbedaan signifikan antara uji Anova dan uji Tukey
+tukey.cld <- multcompLetters4(anova, tukey)
+print(tukey.cld)
+cld <- as.data.frame.list(tukey.cld$`Glass:Temp_Factor`)
+data_summary$Tukey <- cld$Letters
+print(data_summary)
