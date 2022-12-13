@@ -451,4 +451,145 @@ output:
 
 
 
+## Soal Nomor 5
+
+> Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk mengetahui pengaruh suhu operasi (100˚C, 125˚C dan 150˚C) dan tiga jenis kaca pelat muka (A, B dan C) pada keluaran cahaya tabung osiloskop. Percobaan dilakukan sebanyak 27 kali dan didapat data sebagai berikut: Data Hasil Eksperimen. Dengan data tersebut: 
+
+
+### a) Buatlah plot sederhana untuk visualisasi data 
+
+```r
+GTL <- read_csv("GTL.csv")
+head(GTL)
+str(GTL)
+```
+
+output:
+
+```r
+  Glass  Temp Light
+  <chr> <dbl> <dbl>
+1 A       100   580
+2 A       100   568
+3 A       100   570
+4 B       100   550
+5 B       100   530
+6 B       100   579
+
+spc_tbl_ [27 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Glass: chr [1:27] "A" "A" "A" "B" ...
+ $ Temp : num [1:27] 100 100 100 100 100 100 100 100 100 125 ...
+ $ Light: num [1:27] 580 568 570 550 530 579 546 575 599 1090 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   Glass = col_character(),
+  ..   Temp = col_double(),
+  ..   Light = col_double()
+  .. )
+ - attr(*, "problems")=<externalptr> 
+
+```
+
+- visualisasi sederhana dengan plotting
+
+```r
+qplot(x = Temp, y = Light, geom = "point", data = GTL) +
+  facet_grid(.~Glass, labeller = label_both)
+
+```
+
+output:
+
+![5a](documentation/5a.png)
+
+### b) Lakukan uji ANOVA dua arah untuk 2 faktor
+
+```r
+anova <- aov(Light ~ Glass + Temp, data = GTL)
+summary(anova)
+```
+
+output:
+
+```r
+            Df  Sum Sq Mean Sq F value   Pr(>F)    
+Glass        2  150865   75432   3.557   0.0451 *  
+Temp         1 1779756 1779756  83.932 3.89e-09 ***
+Residuals   23  487710   21205                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+### c) Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
+
+```r
+data_summary <- group_by(GTL, Glass, Temp) %>%
+  summarise(mean=mean(Light), sd=sd(Light)) %>%
+  arrange(desc(mean))
+print(data_summary)
+```
+
+output:
+
+```r
+  Glass  Temp  mean    sd
+  <chr> <dbl> <dbl> <dbl>
+1 A       150 1386   6   
+2 B       150 1313  14.5 
+3 A       125 1087.  2.52
+4 C       125 1055. 10.6 
+5 B       125 1035  35   
+6 C       150  887. 18.6 
+7 C       100  573. 26.5 
+8 A       100  573.  6.43
+9 B       100  553  24.6 
+```
+
+### d) Lakukann Uji Tukey
+
+```r
+tukey <- TukeyHSD(anova, ordered = FALSE)
+print(tukey)
+```
+
+output:
+
+```r
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Light ~ Glass + Temp, data = GTL)
+
+$Glass
+          diff       lwr        upr     p adj
+B-A  -48.33333 -220.2442 123.577518 0.7635056
+C-A -177.11111 -349.0220  -5.200259 0.0426241
+C-B -128.77778 -300.6886  43.133074 0.1683024
+```
+
+### e) Gunakan compact letter display untuk menunjukkan perbedaan signifikan antara uji Anova dan uji Tukey
+
+- membuat compact letter terlebih dahulu:
+
+```r
+tukey.cld <- multcompLetters4(anova, tukey)
+print(tukey.cld)
+```
+
+output:
+
+![5e](documentation/5e.png)
+
+- tambahkan compact letter ke dalam tabel
+
+```r
+cld <- as.data.frame.list(tukey.cld$`Glass:Temp_Factor`)
+data_summary$Tukey <- cld$Letters
+print(data_summary)
+```
+
+
+output:
+
+![5e2](documentation/5e2.png)
 
