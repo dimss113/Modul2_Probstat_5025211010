@@ -2,6 +2,7 @@ library("Rlab")
 library(ggplot2)
 library(dplyr)
 library("BSDA")
+library(MASS)
 
 # soal nomor 1a (menentukan standar deviasi dari data selisih pasangan pengamatan tabel)
 ## diketahui n = 9, 
@@ -124,3 +125,34 @@ print(paste("critical value: ", as.character(critical_val)))
 
 ## f) kesimpulan
 ###kami menghitung statistik uji-z sesuai dengan informasi yang kami miliki dari Contoh 2. Dalam hal ini, kami menggunakan statistik-z karena kami mengetahui rata-rata μ dan standar deviasi σ uji-z = 2,298274 Kemudian kami menghitung pval untuk menghitung dua ekor p-nilai df statistik Alih-alih menggunakan nilai kritis asumsikan df=2 Karena ternyata lebih besar dari tingkat signifikansi 0,05, kami tidak menolak hipotesis nol Statistik uji 1,851676 terletak di antara nilai kritis -4,302653 dan 4.302653. Oleh karena itu, pada tingkat signifikansi 0,05, kami tidak menolak hipotesis nol bahwa rata-rata Bandung dan Bali tidak berbeda.
+
+
+
+
+# Soal Nomor 4
+Grup1 <- c(19 ,18.6 ,18.3 ,18 ,18.2 ,18.6 ,18.5 ,18.2 ,18.4 ,18.9 ,19.9 ,18.5 ,16.9 ,18 ,17.3 ,17.8 ,20 ,19 ,19.2 ,18.9 ,17.5 ,18.1 ,18 ,18.1 ,17.4 ,17.9 ,17.4 ,16.7 ,19.7 ,19.3 ,19 ,19.4 ,19.8 ,19.3 ,18.5)
+Grup2 <- c(18.3 ,17.9 ,17.6 ,17.3 ,17.5 ,17.9 ,17.8 ,17 ,17.7 ,18.2 ,19.2 ,17.8 ,16.2 ,17.3 ,16.6 ,17.1 ,19.3 ,18.3 ,18.5 ,18 ,16.8 ,17.2 ,17.3 ,17.4 ,16.7 ,17.2 ,16.7 ,16.2 ,19 ,18.6 ,18.3 ,18.7 ,19.1 ,18.6 ,17.8)
+Grup3 <- c(18, 18.6, 18.3, 18, 18.2, 18.2, 18.5, 18.2, 19.2, 18.5, 19.9, 18.5, 16.9, 18, 17, 17.2, 20, 19, 19.2, 18.9, 17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.5, 19.7, 19, 19, 19.7, 19.8, 19.3, 17)
+
+qqnorm(Grup1, 
+       ylab = "Cat Width (in cm)", 
+       col = "dark green")
+qqline(Grup1, 
+       col = "red")
+
+qqnorm(Grup2, 
+       ylab = "Cat Width (in cm)", 
+       col = "dark blue")
+qqline(Grup2, 
+       col = "green")
+
+qqnorm(Grup3, 
+       ylab = "Cat Width (in cm)", 
+       col = "dark orange")
+qqline(Grup3, 
+       col = "blue")
+
+
+
+
+
