@@ -216,3 +216,87 @@ output:
 > Diketahui perusahaan memiliki seorang data analyst ingin memecahkan permasalahan pengambilan keputusan dalam perusahaan tersebut. Selanjutnya didapatkanlah data berikut dari perusahaan saham tersebut.
 
 ![3](documentation/3.png)
+
+> Dari data diatas berilah keputusan serta kesimpulan yang didapatkan dari hasil diatas. Asumsikan nilai variancenya sama, apakah ada perbedaan pada rata-ratanya (α= 0.05)? Buatlah :
+
+### a) H0 dan H1
+- null hipotesisnya adalah
+
+```r
+H0: μ1−μ2=0
+```
+
+- alternatif hipotesisnya adalah
+
+```r
+H1: μ1−μ2≠0
+```
+
+### b) Hitung Sampel Statistik
+
+```r
+n_bandung = 19
+sd_bandung = 1.67
+mean_bandung = 3.64
+
+n_bali = 27
+sd_bali = 1.32
+mean_bali = 2.79
+significant_val = 0.05
+delta_0 = 0
+
+z_score <- (mean_bandung - mean_bali - delta_0)/
+  sqrt(sd_bandung/n_bandung + sd_bali/n_bali)
+print(paste("z_score: ", as.character(z_score)))
+p_value = pnorm(z_score)
+print(paste("p_value: ", as.character(p_value)))
+```
+
+output:
+
+```r
+"z_score:  2.29827434938398"
+"p_value:  0.989226910296688"
+```
+> (karena ternyata lebih besar dari tingkat signifikansi 0.05 kami tidak menolak null hipotesis)
+
+
+### c) Lakukan Uji Statistik (df =2)
+
+```r
+p_value = 2*pt(z_score, 2)
+print(paste("p_value: ", as.character(p_value)))
+```
+
+output:
+
+```r
+"p_value:  1.85167636429173"
+```
+
+### d) Nilai Kritikal
+
+```r
+alpha = 0.05
+t.half.alpha = qt(1-alpha/2, df=2)
+critical_val = c(-t.half.alpha, t.half.alpha)
+print(paste("critical value: ", as.character(critical_val)))
+```
+
+output:
+
+```r
+[1] "critical value:  -4.30265272974946"
+[2] "critical value:  4.30265272974946" 
+```
+
+```
+(per one tail 0.25 signifikan level)
+(per two tail 0.05 signifikan level)
+```
+
+### e) Keputusan
+> Statistik uji 1,851676 terletak di antara nilai kritis -4,302653 dan 4,302653. Oleh karena itu, pada tingkat signifikansi 0,05, kami tidak menolak hipotesis nol bahwa rata-rata Bandung dan Bali tidak berbeda.
+
+### f) Kesimpulan
+> kami menghitung statistik uji-z sesuai dengan informasi yang kami miliki dari Contoh 2. Dalam hal ini, kami menggunakan statistik-z karena kami mengetahui rata-rata μ dan standar deviasi σ uji-z = 2,298274 Kemudian kami menghitung pval untuk menghitung dua ekor p-nilai df statistik Alih-alih menggunakan nilai kritis asumsikan df=2 Karena ternyata lebih besar dari tingkat signifikansi 0,05, kami tidak menolak hipotesis nol Statistik uji 1,851676 terletak di antara nilai kritis -4,302653 dan 4.302653. Oleh karena itu, pada tingkat signifikansi 0,05, kami tidak menolak hipotesis nol bahwa rata-rata Bandung dan Bali tidak berbeda.
