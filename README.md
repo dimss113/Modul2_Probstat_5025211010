@@ -94,5 +94,29 @@ output:
 4.967529
 ```
 
+### b) Carilah nilai t (p-value)
+- dalam menentukan nilai t(p-value) kita bisa menggunakan function t.test dengan parameter (x, y, alternative, var.equal)
+
+```r
+x = c(78, 75, 67, 77, 70, 72, 78, 74, 77)
+y = c(100, 95, 70, 90, 90, 90, 89, 90, 100)
+t.test(x, y, alternative = "greater", var.equal =  FALSE)
+```
+
+output:
+
+```r
+	Welch Two Sample t-test
+
+data:  x and y
+t = -5.0473, df = 10.956, p-value = 0.9998
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ -21.99644       Inf
+sample estimates:
+mean of x mean of y 
+ 74.22222  90.44444 
+```
+
 
 
