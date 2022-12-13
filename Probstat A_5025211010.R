@@ -79,7 +79,7 @@ print(paste("p-value: ", as.character(p_value)))
 ## menentukan z-score
 significant_val = .05
 z.alpha = qnorm(significant_val)
--z.alpha
+print(paste("z-score: ", as.character(-z.alpha)))
 
 
 
